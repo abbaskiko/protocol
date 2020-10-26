@@ -7,6 +7,7 @@ import { BigNumber } from '@0x/utils';
 import {
     ERC20BridgeSource,
     GetMarketOrdersOpts,
+    LiquidityProviderRegistry,
     OptimizedMarketOrder,
     TokenAdjacencyGraph,
 } from './utils/market_operation_utils/types';
@@ -310,12 +311,12 @@ export interface SwapQuoterOpts extends OrderPrunerOpts {
     ethereumRpcUrl?: string;
     contractAddresses?: AssetSwapperContractAddresses;
     samplerGasLimit?: number;
-    liquidityProviderRegistryAddress?: string;
     multiBridgeAddress?: string;
     ethGasStationUrl?: string;
     rfqt?: SwapQuoterRfqtOpts;
     samplerOverrides?: SamplerOverrides;
     tokenAdjacencyGraph?: TokenAdjacencyGraph;
+    liquidityProviderRegistry?: LiquidityProviderRegistry;
 }
 
 /**
