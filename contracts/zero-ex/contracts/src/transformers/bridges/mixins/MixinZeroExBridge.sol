@@ -21,26 +21,8 @@ pragma solidity ^0.6.5;
 import "@0x/contracts-erc20/contracts/src/v06/LibERC20TokenV06.sol";
 import "@0x/contracts-erc20/contracts/src/v06/IERC20TokenV06.sol";
 import "@0x/contracts-utils/contracts/src/v06/LibSafeMathV06.sol";
+import "../../../vendor/ILiquidityProvider.sol";
 
-interface IERC20Bridge {
-
-    /// @dev Transfers `amount` of the ERC20 `buyToken` from `from` to `to`.
-    /// @param buyToken The address of the ERC20 token to transfer.
-    /// @param from Address to transfer asset from.
-    /// @param to Address to transfer asset to.
-    /// @param amount Amount of asset to transfer.
-    /// @param bridgeData Arbitrary asset data needed by the bridge contract.
-    /// @return success The magic bytes `0xdc1600f3` if successful.
-    function bridgeTransferFrom(
-        IERC20TokenV06 buyToken,
-        address from,
-        address to,
-        uint256 amount,
-        bytes calldata bridgeData
-    )
-        external
-        returns (bytes4 success);
-}
 
 contract MixinZeroExBridge {
 
@@ -63,9 +45,9 @@ contract MixinZeroExBridge {
             bridgeAddress,
             sellAmount
         );
-        IERC20Bridge(bridgeAddress).bridgeTransferFrom(
-            buyToken,
-            address(bridgeAddress),
+        ILiquidityProvider(bridgeAddress).sellTokenForToken(
+            address(sellToken),
+            address(buyToken),
             address(this),
             1, // amount to transfer back from the bridge
             bridgeData

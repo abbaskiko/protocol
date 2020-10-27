@@ -20,44 +20,54 @@ pragma solidity ^0.6.5;
 
 interface ILiquidityProvider {
 
-    /// @dev Transfers `amount` of the ERC20 `tokenAddress` from `from` to `to`.
-    /// @param tokenAddress The address of the ERC20 token to transfer.
-    /// @param from Address to transfer asset from.
-    /// @param to Address to transfer asset to.
-    /// @param amount Amount of asset to transfer.
-    /// @param bridgeData Arbitrary asset data needed by the bridge contract.
-    /// @return success The magic bytes `0xdc1600f3` if successful.
-    function bridgeTransferFrom(
-        address tokenAddress,
-        address from,
-        address to,
-        uint256 amount,
-        bytes calldata bridgeData
+    /// @dev Trades `takerToken` for `makerToken`. The amount of `takerToken`
+    ///      to sell must be transferred to the contract prior to calling this
+    ///      function to trigger the trade.
+    /// @param takerToken The token being sold.
+    /// @param makerToken The token being bought.
+    /// @param recipient The recipient of the bought tokens.
+    /// @param minBuyAmount The minimum acceptable amount of `makerToken` to buy.
+    /// @param auxiliaryData Arbitrary auxiliary data supplied to the contract.
+    /// @return boughtAmount The amount of `makerToken` bought.
+    function sellTokenForToken(
+        address takerToken,
+        address makerToken,
+        address recipient,
+        uint256 minBuyAmount,
+        bytes calldata auxiliaryData
     )
         external
-        returns (bytes4 success);
+        returns (uint256 boughtAmount);
 
     /// @dev Trades ETH for token. ETH must be sent to the contract prior to
     ///      calling this function to trigger the trade.
-    /// @param taker The recipient of the bought tokens.
-    /// @param minMakerAssetAmount The minimum amount of maker asset to buy.
-    /// @return makerAssetAmount The amount of tokens bought.
+    /// @param makerToken The token being bought.
+    /// @param recipient The recipient of the bought tokens.
+    /// @param minBuyAmount The minimum acceptable amount of `makerToken` to buy.
+    /// @param auxiliaryData Arbitrary auxiliary data supplied to the contract.
+    /// @return boughtAmount The amount of `makerToken` bought.
     function sellEthForToken(
-        address taker,
-        uint256 minMakerAssetAmount
+        address makerToken,
+        address recipient,
+        uint256 minBuyAmount,
+        bytes calldata auxiliaryData
     )
         external
-        returns (uint256 makerAssetAmount);
+        returns (uint256 boughtAmount);
 
     /// @dev Trades token for ETH. The token must be sent to the contract prior
     ///      to calling this function to trigger the trade.
-    /// @param taker The recipient of the bought ETH.
-    /// @param minMakerAssetAmount The minimum amount of ETH to buy.
-    /// @return makerAssetAmount The amount of ETH bought.
+    /// @param takerToken The token being sold.
+    /// @param recipient The recipient of the bought tokens.
+    /// @param minBuyAmount The minimum acceptable amount of ETH to buy.
+    /// @param auxiliaryData Arbitrary auxiliary data supplied to the contract.
+    /// @return boughtAmount The amount of ETH bought.
     function sellTokenForEth(
-        address payable taker,
-        uint256 minMakerAssetAmount
+        address takerToken,
+        address payable recipient,
+        uint256 minBuyAmount,
+        bytes calldata auxiliaryData
     )
         external
-        returns (uint256 makerAssetAmount);
+        returns (uint256 boughtAmount);
 }
