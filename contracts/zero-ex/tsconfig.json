@@ -69,6 +69,7 @@
         "test/generated-artifacts/LibMetaTransactionsRichErrors.json",
         "test/generated-artifacts/LibMetaTransactionsStorage.json",
         "test/generated-artifacts/LibMigrate.json",
+        "test/generated-artifacts/LibOrderHash.json",
         "test/generated-artifacts/LibOwnableRichErrors.json",
         "test/generated-artifacts/LibOwnableStorage.json",
         "test/generated-artifacts/LibProxyRichErrors.json",

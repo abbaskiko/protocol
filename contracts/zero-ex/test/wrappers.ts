@@ -45,6 +45,7 @@ export * from '../test/generated-wrappers/lib_liquidity_provider_rich_errors';
 export * from '../test/generated-wrappers/lib_meta_transactions_rich_errors';
 export * from '../test/generated-wrappers/lib_meta_transactions_storage';
 export * from '../test/generated-wrappers/lib_migrate';
+export * from '../test/generated-wrappers/lib_order_hash';
 export * from '../test/generated-wrappers/lib_ownable_rich_errors';
 export * from '../test/generated-wrappers/lib_ownable_storage';
 export * from '../test/generated-wrappers/lib_proxy_rich_errors';

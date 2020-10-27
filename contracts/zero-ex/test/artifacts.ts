@@ -47,6 +47,7 @@ import * as LibLiquidityProviderRichErrors from '../test/generated-artifacts/Lib
 import * as LibMetaTransactionsRichErrors from '../test/generated-artifacts/LibMetaTransactionsRichErrors.json';
 import * as LibMetaTransactionsStorage from '../test/generated-artifacts/LibMetaTransactionsStorage.json';
 import * as LibMigrate from '../test/generated-artifacts/LibMigrate.json';
+import * as LibOrderHash from '../test/generated-artifacts/LibOrderHash.json';
 import * as LibOwnableRichErrors from '../test/generated-artifacts/LibOwnableRichErrors.json';
 import * as LibOwnableStorage from '../test/generated-artifacts/LibOwnableStorage.json';
 import * as LibProxyRichErrors from '../test/generated-artifacts/LibProxyRichErrors.json';
@@ -203,6 +204,7 @@ export const artifacts = {
     IExchange: IExchange as ContractArtifact,
     IGasToken: IGasToken as ContractArtifact,
     IStaking: IStaking as ContractArtifact,
+    LibOrderHash: LibOrderHash as ContractArtifact,
     ITestSimpleFunctionRegistryFeature: ITestSimpleFunctionRegistryFeature as ContractArtifact,
     TestCallTarget: TestCallTarget as ContractArtifact,
     TestDelegateCaller: TestDelegateCaller as ContractArtifact,
