@@ -70,4 +70,19 @@ interface ILiquidityProvider {
     )
         external
         returns (uint256 boughtAmount);
+
+    /// @dev Quotes the amount of `makerToken` that would be obtained by
+    ///      selling `sellAmount` of `takerToken`.
+    /// @param takerToken Address of the taker token (what to sell).
+    /// @param makerToken Address of the maker token (what to buy).
+    /// @param sellAmount Amount of `takerToken` to sell.
+    /// @return makerTokenAmount Amount of `makerToken` that would be obtained.
+    function getSellQuote(
+        address takerToken,
+        address makerToken,
+        uint256 sellAmount
+    )
+        external
+        view
+        returns (uint256 makerTokenAmount);
 }
