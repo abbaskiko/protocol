@@ -41,7 +41,6 @@ import {
     OptimizerResult,
     OptimizerResultWithReport,
     OrderDomain,
-    TokenAdjacencyGraph,
 } from './types';
 
 // tslint:disable:boolean-naming
