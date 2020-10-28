@@ -73,8 +73,10 @@ interface ILiquidityProvider {
 
     /// @dev Quotes the amount of `makerToken` that would be obtained by
     ///      selling `sellAmount` of `takerToken`.
-    /// @param takerToken Address of the taker token (what to sell).
-    /// @param makerToken Address of the maker token (what to buy).
+    /// @param takerToken Address of the taker token (what to sell). Use
+    ///        the wETH address if selling ETH.
+    /// @param makerToken Address of the maker token (what to buy). Use
+    ///        the wETH address if buying ETH.
     /// @param sellAmount Amount of `takerToken` to sell.
     /// @return makerTokenAmount Amount of `makerToken` that would be obtained.
     function getSellQuote(
