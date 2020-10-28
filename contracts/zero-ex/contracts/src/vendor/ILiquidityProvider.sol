@@ -20,18 +20,18 @@ pragma solidity ^0.6.5;
 
 interface ILiquidityProvider {
 
-    /// @dev Trades `takerToken` for `makerToken`. The amount of `takerToken`
+    /// @dev Trades `inputToken` for `outputToken`. The amount of `inputToken`
     ///      to sell must be transferred to the contract prior to calling this
     ///      function to trigger the trade.
-    /// @param takerToken The token being sold.
-    /// @param makerToken The token being bought.
+    /// @param inputToken The token being sold.
+    /// @param outputToken The token being bought.
     /// @param recipient The recipient of the bought tokens.
-    /// @param minBuyAmount The minimum acceptable amount of `makerToken` to buy.
+    /// @param minBuyAmount The minimum acceptable amount of `outputToken` to buy.
     /// @param auxiliaryData Arbitrary auxiliary data supplied to the contract.
-    /// @return boughtAmount The amount of `makerToken` bought.
+    /// @return boughtAmount The amount of `outputToken` bought.
     function sellTokenForToken(
-        address takerToken,
-        address makerToken,
+        address inputToken,
+        address outputToken,
         address recipient,
         uint256 minBuyAmount,
         bytes calldata auxiliaryData
@@ -39,31 +39,33 @@ interface ILiquidityProvider {
         external
         returns (uint256 boughtAmount);
 
-    /// @dev Trades ETH for token. ETH must be sent to the contract prior to
-    ///      calling this function to trigger the trade.
-    /// @param makerToken The token being bought.
+    /// @dev Trades ETH for token. ETH must either be attached to this function
+    ///      call or sent to the contract prior to calling this function to
+    ///      trigger the trade.
+    /// @param outputToken The token being bought.
     /// @param recipient The recipient of the bought tokens.
-    /// @param minBuyAmount The minimum acceptable amount of `makerToken` to buy.
+    /// @param minBuyAmount The minimum acceptable amount of `outputToken` to buy.
     /// @param auxiliaryData Arbitrary auxiliary data supplied to the contract.
-    /// @return boughtAmount The amount of `makerToken` bought.
+    /// @return boughtAmount The amount of `outputToken` bought.
     function sellEthForToken(
-        address makerToken,
+        address outputToken,
         address recipient,
         uint256 minBuyAmount,
         bytes calldata auxiliaryData
     )
         external
+        payable
         returns (uint256 boughtAmount);
 
     /// @dev Trades token for ETH. The token must be sent to the contract prior
     ///      to calling this function to trigger the trade.
-    /// @param takerToken The token being sold.
+    /// @param inputToken The token being sold.
     /// @param recipient The recipient of the bought tokens.
     /// @param minBuyAmount The minimum acceptable amount of ETH to buy.
     /// @param auxiliaryData Arbitrary auxiliary data supplied to the contract.
     /// @return boughtAmount The amount of ETH bought.
     function sellTokenForEth(
-        address takerToken,
+        address inputToken,
         address payable recipient,
         uint256 minBuyAmount,
         bytes calldata auxiliaryData
@@ -71,20 +73,20 @@ interface ILiquidityProvider {
         external
         returns (uint256 boughtAmount);
 
-    /// @dev Quotes the amount of `makerToken` that would be obtained by
-    ///      selling `sellAmount` of `takerToken`.
-    /// @param takerToken Address of the taker token (what to sell). Use
+    /// @dev Quotes the amount of `outputToken` that would be obtained by
+    ///      selling `sellAmount` of `inputToken`.
+    /// @param inputToken Address of the taker token (what to sell). Use
     ///        the wETH address if selling ETH.
-    /// @param makerToken Address of the maker token (what to buy). Use
+    /// @param outputToken Address of the maker token (what to buy). Use
     ///        the wETH address if buying ETH.
-    /// @param sellAmount Amount of `takerToken` to sell.
-    /// @return makerTokenAmount Amount of `makerToken` that would be obtained.
+    /// @param sellAmount Amount of `inputToken` to sell.
+    /// @return outputTokenAmount Amount of `outputToken` that would be obtained.
     function getSellQuote(
-        address takerToken,
-        address makerToken,
+        address inputToken,
+        address outputToken,
         uint256 sellAmount
     )
         external
         view
-        returns (uint256 makerTokenAmount);
+        returns (uint256 outputTokenAmount);
 }
