@@ -30,6 +30,22 @@ contract MixinZeroExBridge {
     using LibERC20TokenV06 for IERC20TokenV06;
     using LibSafeMathV06 for uint256;
 
+    /// @dev Emitted when a trade occurs.
+    /// @param inputToken The token the bridge is converting from.
+    /// @param outputToken The token the bridge is converting to.
+    /// @param inputTokenAmount Amount of input token.
+    /// @param outputTokenAmount Amount of output token.
+    /// @param from The bridge address, indicating the underlying source of the fill.
+    /// @param to The `to` address, currrently `address(this)`
+    event ERC20BridgeTransfer(
+        IERC20TokenV06 inputToken,
+        IERC20TokenV06 outputToken,
+        uint256 inputTokenAmount,
+        uint256 outputTokenAmount,
+        address from,
+        address to
+    );
+
     function _tradeZeroExBridge(
         address bridgeAddress,
         IERC20TokenV06 sellToken,
@@ -52,7 +68,17 @@ contract MixinZeroExBridge {
                 address(this), // recipient
                 1, // minBuyAmount
                 bridgeData
-        ) {} catch {
+        ) {
+            boughtAmount = buyToken.balanceOf(address(this)).safeSub(balanceBefore);
+            emit ERC20BridgeTransfer(
+                sellToken,
+                buyToken,
+                sellAmount,
+                boughtAmount,
+                bridgeAddress,
+                address(this)
+            );
+        } catch {
             IERC20Bridge(bridgeAddress).bridgeTransferFrom(
                 address(buyToken),
                 bridgeAddress,
@@ -60,7 +86,7 @@ contract MixinZeroExBridge {
                 1, // minBuyAmount
                 bridgeData
             );
+            boughtAmount = buyToken.balanceOf(address(this)).safeSub(balanceBefore);
         }
-        boughtAmount = buyToken.balanceOf(address(this)).safeSub(balanceBefore);
     }
 }
