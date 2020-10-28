@@ -1,5 +1,18 @@
 [
     {
+        "version": "4.9.0",
+        "changes": [
+            {
+                "note": "Add support for LiquidityProvider feature in the swap quote consumer",
+                "pr": 16
+            },
+            {
+                "note": "Remove support for MultiBridge 😞",
+                "pr": 16
+            }
+        ]
+    },
+    {
         "version": "4.8.1",
         "changes": [
             {

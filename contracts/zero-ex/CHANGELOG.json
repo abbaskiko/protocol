@@ -5,6 +5,18 @@
             {
                 "note": "Add support for collecting protocol fees in ETH or WETH",
                 "pr": 2
+            },
+            {
+                "note": "Update LiquidityProviderFeature to use off-chain registry and sandbox",
+                "pr": 16
+            },
+            {
+                "note": "Update ILiquidityProvider interface",
+                "pr": 16
+            },
+            {
+                "note": "Update ProtocolFeeUnfunded event to emit order hash",
+                "pr": 16
             }
         ]
     },
