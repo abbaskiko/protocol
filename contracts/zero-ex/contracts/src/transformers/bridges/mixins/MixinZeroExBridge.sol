@@ -22,6 +22,7 @@ import "@0x/contracts-erc20/contracts/src/v06/LibERC20TokenV06.sol";
 import "@0x/contracts-erc20/contracts/src/v06/IERC20TokenV06.sol";
 import "@0x/contracts-utils/contracts/src/v06/LibSafeMathV06.sol";
 import "../../../vendor/ILiquidityProvider.sol";
+import "../../../vendor/v3/IERC20Bridge.sol";
 
 
 contract MixinZeroExBridge {
@@ -45,13 +46,21 @@ contract MixinZeroExBridge {
             bridgeAddress,
             sellAmount
         );
-        ILiquidityProvider(bridgeAddress).sellTokenForToken(
-            address(sellToken),
-            address(buyToken),
-            address(this),
-            1, // amount to transfer back from the bridge
-            bridgeData
-        );
+        try ILiquidityProvider(bridgeAddress).sellTokenForToken(
+                address(sellToken),
+                address(buyToken),
+                address(this), // recipient
+                1, // minBuyAmount
+                bridgeData
+        ) {} catch {
+            IERC20Bridge(bridgeAddress).bridgeTransferFrom(
+                address(buyToken),
+                bridgeAddress,
+                address(this), // recipient
+                1, // minBuyAmount
+                bridgeData
+            );
+        }
         boughtAmount = buyToken.balanceOf(address(this)).safeSub(balanceBefore);
     }
 }
