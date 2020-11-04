@@ -1,5 +1,14 @@
 [
     {
+        "version": "0.9.0",
+        "changes": [
+            {
+                "note": "Convert metatransactions to use `LibSignature`",
+                "pr": 31
+            }
+        ]
+    },
+    {
         "version": "0.8.0",
         "changes": [
             {
