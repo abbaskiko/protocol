@@ -94,8 +94,7 @@ blockchainTests.resets('Full migration', env => {
             fns: [
                 'executeMetaTransaction',
                 'batchExecuteMetaTransactions',
-                // TODO: Reenable this. Possibly broken due to nested structs?
-                // '_executeMetaTransaction',
+                '_executeMetaTransaction',
                 'getMetaTransactionExecutedBlock',
                 'getMetaTransactionHashExecutedBlock',
                 'getMetaTransactionHash',
@@ -137,6 +136,11 @@ blockchainTests.resets('Full migration', env => {
             return hexUtils.random(parseInt(/\d+$/.exec(item.type)![0], 10));
         }
         if (/^uint\d+$/.test(item.type)) {
+            if (item.type === 'uint8') {
+                // Solidity will revert if enum values are out of range, so
+                // play it safe and pick zero.
+                return 0;
+            }
             return new BigNumber(hexUtils.random(parseInt(/\d+$/.exec(item.type)![0], 10) / 8));
         }
         if (/^int\d+$/.test(item.type)) {
